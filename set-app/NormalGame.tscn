@@ -13,12 +13,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0, 0.25098, 0.0862745, 1 )
 
-[node name="StatsGrid" type="GridContainer" parent="."]
-anchor_right = 1.0
+[node name="TopText" type="GridContainer" parent="."]
+margin_right = 1080.0
 margin_bottom = 300.0
 columns = 2
 
-[node name="StatsLabel" type="RichTextLabel" parent="StatsGrid"]
+[node name="StatsLabel" type="RichTextLabel" parent="TopText"]
 margin_right = 539.0
 margin_bottom = 300.0
 size_flags_horizontal = 3
@@ -26,7 +26,7 @@ size_flags_vertical = 3
 custom_fonts/normal_font = ExtResource( 2 )
 text = "empty"
 
-[node name="TimerLabel" type="RichTextLabel" parent="StatsGrid"]
+[node name="TimerLabel" type="RichTextLabel" parent="TopText"]
 margin_left = 542.0
 margin_right = 1080.0
 margin_bottom = 300.0
@@ -35,33 +35,39 @@ size_flags_vertical = 3
 custom_fonts/normal_font = ExtResource( 2 )
 text = "empty"
 
-[node name="CardGrid" type="GridContainer" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 40.0
-margin_top = 340.0
-margin_right = -40.0
-margin_bottom = -240.0
+[node name="Table" type="GridContainer" parent="."]
+margin_top = 300.0
+margin_right = 1080.0
+margin_bottom = 1900.0
 mouse_filter = 2
 custom_constants/vseparation = 36
 custom_constants/hseparation = 36
 columns = 3
 
-[node name="ShowSetButton" type="Button" parent="."]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_top = -200.0
-margin_right = 500.0
+[node name="LatestSets" type="HBoxContainer" parent="."]
+margin_top = 1940.0
+margin_right = 1080.0
+margin_bottom = 2180.0
+
+[node name="Buttons" type="HBoxContainer" parent="."]
+margin_top = 2200.0
+margin_right = 1080.0
+margin_bottom = 2400.0
+
+[node name="ShowSetButton" type="Button" parent="Buttons"]
+margin_right = 538.0
+margin_bottom = 200.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 custom_fonts/font = ExtResource( 2 )
 text = "SHOW SET"
 
-[node name="RestartButton" type="Button" parent="."]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -500.0
-margin_top = -200.0
+[node name="RestartButton" type="Button" parent="Buttons"]
+margin_left = 541.0
+margin_right = 1080.0
+margin_bottom = 200.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 custom_fonts/font = ExtResource( 2 )
 text = "RESTART"
 
@@ -79,5 +85,5 @@ custom_fonts/normal_font = ExtResource( 2 )
 text = "empty"
 
 [connection signal="game_over" from="." to="." method="_on_NormalGame_game_over"]
-[connection signal="pressed" from="ShowSetButton" to="." method="_on_ShowSetButton_pressed"]
-[connection signal="pressed" from="RestartButton" to="." method="_on_RestartButton_pressed"]
+[connection signal="pressed" from="Buttons/ShowSetButton" to="." method="_on_ShowSetButton_pressed"]
+[connection signal="pressed" from="Buttons/RestartButton" to="." method="_on_RestartButton_pressed"]

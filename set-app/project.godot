@@ -24,10 +24,6 @@ config/name="set-app"
 run/main_scene="res://MainMenu.tscn"
 config/icon="res://icon.png"
 
-[autoload]
-
-GameManager="*res://GameManager.gd"
-
 [display]
 
 window/size/width=1080

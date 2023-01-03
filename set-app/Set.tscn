@@ -1,0 +1,76 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/cards/default.png" type="Texture" id=1]
+[ext_resource path="res://DefaultFont.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Set.gd" type="Script" id=3]
+
+[node name="Set" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+script = ExtResource( 3 )
+
+[node name="Background" type="ColorRect" parent="."]
+margin_right = 355.0
+margin_bottom = 235.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 355.0
+margin_bottom = 235.0
+
+[node name="Cards" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 355.0
+margin_bottom = 75.0
+
+[node name="Card1Container" type="CenterContainer" parent="VBoxContainer/Cards"]
+margin_right = 116.0
+margin_bottom = 75.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Card1Image" type="TextureRect" parent="VBoxContainer/Cards/Card1Container"]
+margin_right = 115.0
+margin_bottom = 75.0
+rect_min_size = Vector2( 115, 75 )
+texture = ExtResource( 1 )
+expand = true
+
+[node name="Card2Container" type="CenterContainer" parent="VBoxContainer/Cards"]
+margin_left = 119.0
+margin_right = 235.0
+margin_bottom = 75.0
+rect_min_size = Vector2( 115, 75 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Card2Image" type="TextureRect" parent="VBoxContainer/Cards/Card2Container"]
+margin_right = 115.0
+margin_bottom = 75.0
+rect_min_size = Vector2( 115, 75 )
+texture = ExtResource( 1 )
+expand = true
+
+[node name="Card3Container" type="CenterContainer" parent="VBoxContainer/Cards"]
+margin_left = 238.0
+margin_right = 355.0
+margin_bottom = 75.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Card3Image" type="TextureRect" parent="VBoxContainer/Cards/Card3Container"]
+margin_left = 1.0
+margin_right = 116.0
+margin_bottom = 75.0
+rect_min_size = Vector2( 115, 75 )
+texture = ExtResource( 1 )
+expand = true
+
+[node name="TimestampButton" type="Button" parent="VBoxContainer"]
+margin_top = 78.0
+margin_right = 355.0
+margin_bottom = 235.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 2 )
+text = "empty"

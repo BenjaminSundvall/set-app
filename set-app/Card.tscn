@@ -20,16 +20,18 @@ color = 1
 number = 1
 shading = 1
 
-[node name="HighlightBorder" type="Sprite" parent="."]
+[node name="HighlightBorder" type="TextureRect" parent="."]
 visible = false
-scale = Vector2( 1.20562, 1.21088 )
+anchor_right = 1.0
+anchor_bottom = 1.0
 texture = ExtResource( 3 )
-centered = false
+expand = true
 
-[node name="SelectionBorder" type="Sprite" parent="."]
+[node name="SelectionBorder" type="TextureRect" parent="."]
 visible = false
-scale = Vector2( 1.2, 1.2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
 texture = ExtResource( 4 )
-centered = false
+expand = true
 
 [connection signal="pressed" from="." to="." method="_on_Card_pressed"]

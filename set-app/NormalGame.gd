@@ -1,10 +1,14 @@
 extends Control
 
+onready var MainMenu = preload("res://MainMenu.tscn")
+
 onready var Card = preload("res://Card.tscn")
-onready var cardGrid = $CardGrid
-onready var statsLabel = $StatsGrid/StatsLabel
-onready var timerLabel = $StatsGrid/TimerLabel
+onready var Set = preload("res://Set.tscn")
+onready var cardGrid = $Table
+onready var statsLabel = $TopText/StatsLabel
+onready var timerLabel = $TopText/TimerLabel
 onready var endGameLabel = $EndGameLabel
+onready var latestSets = $LatestSets
 
 
 var deck = []
@@ -14,7 +18,6 @@ var selected_cards = []
 var sets_on_table = []
 var taken_sets = []
 
-var show_set = false
 var game_duration = 0
 var running = true
 
@@ -28,6 +31,7 @@ func _ready():
 
 
 func _process(delta):
+	# TODO: Do this somewhere else less often?
 	if running:
 		game_duration += delta
 		timerLabel.text = "Time: " + get_timer_string()
@@ -65,9 +69,6 @@ func deal_cards():
 		var card = deck.pop_front()
 		table.append(card)
 		cardGrid.add_child(card)
-	statsLabel.text = "Deck: " + str(deck.size()) + \
-					  "\nScore: " + str(taken_sets.size()) + \
-					  "\nSets: " + str(sets_on_table.size())
 	# TODO: Move this somewhere else?
 	clear_highlights()
 
@@ -76,11 +77,16 @@ func refill_table():
 	print("Refilling table...")
 	# Make sure that there are at least 12 cards on the table
 	while table.size() < 12:
+		if deck.empty():
+			break
 		deal_cards()
 
 	# If there are no sets on the table, add three more cards at a time until there is
 	find_sets_on_table()
 	while not sets_on_table:
+		if deck.empty():
+			emit_signal("game_over")
+			return
 		deal_cards()
 		find_sets_on_table()
 
@@ -93,9 +99,10 @@ func find_sets_on_table():
 			for k in range(j+1, card_count):
 				var potential_set = [table[i], table[j], table[k]]
 				if is_set(potential_set):
-					print("Found set at ", i+1, " ", j+1, " ", k+1)
 					sets_on_table.append(potential_set)
-	print("Found ", sets_on_table.size(), " sets!")
+	statsLabel.text = "Deck: " + str(deck.size()) + \
+					  "\nScore: " + str(taken_sets.size()) + \
+					  "\nSets: " + str(sets_on_table.size())
 
 
 func take_set(set):
@@ -103,9 +110,12 @@ func take_set(set):
 		print("A set must consist of exactly 3 cards! (take_set)")
 		return
 	
-	var taken_set = [selected_cards[0], selected_cards[1], selected_cards[2]]	# TODO: Add statistics here (time taken etc.)
-	taken_sets.append(taken_set)		# Add set to list of taken sets
-	for card in taken_set:
+	
+	add_set_to_recent([selected_cards[0].get_feature_list(), \
+					   selected_cards[1].get_feature_list(), \
+					   selected_cards[2].get_feature_list()])
+	
+	for card in selected_cards:
 		cardGrid.remove_child(card)		# Remove the taken cards from scene
 		table.erase(card)
 
@@ -169,6 +179,25 @@ func get_timer_string():
 	var minutes = int(game_duration / 60)
 	var seconds = int(game_duration) % 60
 	return "%d:%02d" % [minutes, seconds]
+
+
+func add_set_to_recent(set):
+	if set.size() != 3:
+		print("Set must be of size 3! (add_set_to_recent)")
+		return
+	
+	var taken_set = Set.instance()
+	taken_set.make_set([selected_cards[0].get_feature_list(), \
+											 selected_cards[1].get_feature_list(), \
+											 selected_cards[2].get_feature_list()], \
+											game_duration)
+	
+	taken_sets.append(taken_set)	# Used for statistics
+	
+	# Show set in recents list
+	latestSets.add_child(taken_set)
+	if latestSets.get_child_count() > 3:
+		latestSets.remove_child(latestSets.get_child(0))
 
 
 func _on_ShowSetButton_pressed():
