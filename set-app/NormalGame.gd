@@ -27,7 +27,6 @@ signal game_over
 func _ready():
 	fill_deck()
 	refill_table()
-	deck.clear()	# TODO: For debugging. Remove this!
 	game_duration = 0
 
 
@@ -61,7 +60,6 @@ func fill_deck():
 
 
 func deal_cards():
-	print("Dealing cards...")
 	for i in range(3):
 		if deck.size() == 0:
 			print("Deck is empty!")
@@ -75,7 +73,6 @@ func deal_cards():
 
 
 func refill_table():
-	print("Refilling table...")
 	# Make sure that there are at least 12 cards on the table
 	while table.size() < 12:
 		if deck.empty():
@@ -213,13 +210,9 @@ func _on_NormalGame_game_over():
 	running = false
 	var savegame = SaveGame.load_savegame()
 	if savegame == null:
-		print("Creating new save...")
 		savegame = SaveGame.new()
-	
-	print("Loaded highscore ", time_to_string(savegame.best_time))
-	print("Current time ", time_to_string(game_duration))
+
 	if game_duration < savegame.best_time:
-		print("New highscore: ", game_duration)
 		endGameLabel.text = "Time: " + time_to_string(game_duration) + \
 							"\nNew best time!" + \
 							"\n\nScore: " + str(taken_sets.size())

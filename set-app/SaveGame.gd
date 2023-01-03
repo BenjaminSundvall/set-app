@@ -3,7 +3,7 @@ extends Resource
 
 const SAVE_GAME_PATH := "user://savegame.tres"
 
-var best_time = 9999
+export(int) var best_time = 9999
 
 func write_savegame():
 	ResourceSaver.save(SAVE_GAME_PATH, self)
