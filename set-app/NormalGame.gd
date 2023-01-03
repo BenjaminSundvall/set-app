@@ -27,6 +27,7 @@ signal game_over
 func _ready():
 	fill_deck()
 	refill_table()
+	deck.clear()	# TODO: For debugging. Remove this!
 	game_duration = 0
 
 
@@ -34,7 +35,7 @@ func _process(delta):
 	# TODO: Do this somewhere else less often?
 	if running:
 		game_duration += delta
-		timerLabel.text = "Time: " + get_timer_string()
+		timerLabel.text = "Time: " + time_to_string(game_duration)
 
 
 func _input(ev):
@@ -175,9 +176,9 @@ func highlight_next():
 		card.set_highlighted(true)
 
 
-func get_timer_string():
-	var minutes = int(game_duration / 60)
-	var seconds = int(game_duration) % 60
+func time_to_string(time):
+	var minutes = int(time / 60)
+	var seconds = int(time) % 60
 	return "%d:%02d" % [minutes, seconds]
 
 
@@ -210,7 +211,50 @@ func _on_RestartButton_pressed():
 
 func _on_NormalGame_game_over():
 	running = false
-	endGameLabel.text = "Time: " + get_timer_string() + \
-						"\nScore: " + str(taken_sets.size())
-	endGameLabel.show()
+	var savegame = SaveGame.load_savegame()
+	if savegame == null:
+		print("Creating new save...")
+		savegame = SaveGame.new()
 	
+	print("Loaded highscore ", time_to_string(savegame.best_time))
+	print("Current time ", time_to_string(game_duration))
+	if game_duration < savegame.best_time:
+		print("New highscore: ", game_duration)
+		endGameLabel.text = "Time: " + time_to_string(game_duration) + \
+							"\nNew best time!" + \
+							"\n\nScore: " + str(taken_sets.size())
+		savegame.best_time = game_duration
+		savegame.write_savegame()
+	else:
+		endGameLabel.text = "Time: " + time_to_string(game_duration) + \
+							"\nPrevious best: " + time_to_string(savegame.best_time) + \
+							"\n\nScore: " + str(taken_sets.size())
+	endGameLabel.show()
+
+
+###################################################################
+
+#var savegame = File.new() #file
+#var savegame = "user://savegame.tres" #place of the file
+#var save_data = {"highscore": 0} #variable to store data
+#
+#func create_save():
+#   savegame.open(save_path, File.WRITE)
+#   savegame.store_var(save_data)
+#   savegame.close()
+#
+##func _ready():
+##  if not savegame.file_exists(save_path):
+##    create_save()
+#
+#func save(high_score):    
+#   save_data["highscore"] = high_score #data to save
+#   savegame.open(save_path, File.WRITE) #open file to write
+#   savegame.store_var(save_data) #store the data
+#   savegame.close() # close the file
+#
+#func read_savegame():
+#   savegame.open(save_path, File.READ) #open the file
+#   save_data = savegame.get_var() #get the value
+#   savegame.close() #close the file
+#   return save_data["highscore"] #return the value
