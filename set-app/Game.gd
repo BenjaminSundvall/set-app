@@ -209,8 +209,13 @@ func highlight_next():
 
 
 func time_to_string(time):
+	# Show countdown instead for time limited game modes
+	if Settings.time_limit > 0:
+		time = Settings.time_limit - time
+	
 	var minutes = int(time / 60)
 	var seconds = int(time) % 60
+	
 	return "%d:%02d" % [minutes, seconds]
 
 
