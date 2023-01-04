@@ -40,6 +40,7 @@ func _ready():
 	refill_table()
 	game_duration = 0
 	highlight_count = 0
+	get_tree().set_quit_on_go_back(false)
 
 
 func _process(delta):
