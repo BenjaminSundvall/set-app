@@ -47,16 +47,16 @@ func _process(delta):
 	if running:
 		game_duration += delta
 		timerLabel.text = time_to_string(game_duration)
-		if time_limit > 0 and game_duration > time_limit:
+		if Settings.time_limit > 0 and game_duration > Settings.time_limit:
 			emit_signal("game_over")
 
 
 func _input(event):
 	if Input.is_key_pressed(KEY_ESCAPE):
 		emit_signal("game_over")
-	elif Input.is_key_pressed(KEY_R):
+	elif Input.is_key_pressed(KEY_R):	# TODO: Remove this! For debugging only!
 		print("Clearing savefile...")
-		savegame.best_time = 0
+		savegame.reset()
 		savegame.write_savegame()
 		print("Savefile cleared!")
 
@@ -141,7 +141,7 @@ func take_set(set):
 		cardGrid.remove_child(card)		# Remove the taken cards from scene
 		table.erase(card)
 	
-	if set_limit > 0 and taken_sets.size() == set_limit:
+	if Settings.score_limit > 0 and taken_sets.size() == Settings.score_limit:
 		emit_signal("game_over")
 		refill_table()	# TODO: Change?
 
@@ -198,7 +198,7 @@ func clear_highlights():
 func highlight_next():
 	if not highlighted:
 		highlight_count += 1
-		game_duration += highlight_penalty
+		game_duration += Settings.highlight_penalty
 	
 	clear_highlights()
 	highlighted = true
@@ -248,16 +248,18 @@ func _on_NormalGame_game_over():
 	if savegame == null:
 		savegame = SaveGame.new()
 
-	if savegame.best_time == 0 or game_duration < savegame.best_time:
-		endGameLabel.text = "Time: " + time_to_string(game_duration) + \
+	if savegame.get_highscore(Settings.game_mode) == 0 or game_duration < savegame.get_highscore(Settings.game_mode):
+		endGameLabel.text = "Game mode: " + Settings.game_mode + \
+							"\n\nTime: " + time_to_string(game_duration) + \
 							"\nNew best time!" + \
 							"\n\nScore: " + str(taken_sets.size()) + \
 							"\nHighlighted sets: " + str(highlight_count)
-		savegame.best_time = game_duration
+		savegame.set_highscore(Settings.game_mode, game_duration)
 		savegame.write_savegame()
 	else:
-		endGameLabel.text = "Time: " + time_to_string(game_duration) + \
-							"\nPrevious best: " + time_to_string(savegame.best_time) + \
+		endGameLabel.text = "Game mode: " + Settings.game_mode + \
+							"\n\nTime: " + time_to_string(game_duration) + \
+							"\nPrevious best: " + time_to_string(savegame.get_highscore(Settings.game_mode)) + \
 							"\n\nScore: " + str(taken_sets.size()) + \
 							"\nHighlighted sets: " + str(highlight_count)
 	endGameLabel.show()
