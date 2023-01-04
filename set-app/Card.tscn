@@ -5,33 +5,32 @@
 [ext_resource path="res://assets/cards/highlight_border.png" type="Texture" id=3]
 [ext_resource path="res://assets/cards/selection_border.png" type="Texture" id=4]
 
-[node name="Card" type="TextureButton"]
-margin_right = 309.0
-margin_bottom = 200.0
+[node name="Card" type="Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 300, 200 )
+script = ExtResource( 2 )
+
+[node name="CardButton" type="TextureButton" parent="."]
 rect_min_size = Vector2( 300, 200 )
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 texture_normal = ExtResource( 1 )
 expand = true
 stretch_mode = 5
-script = ExtResource( 2 )
-shape = 1
-color = 1
-number = 1
-shading = 1
 
-[node name="HighlightBorder" type="TextureRect" parent="."]
+[node name="HighlightBorder" type="TextureRect" parent="CardButton"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 3 )
 expand = true
 
-[node name="SelectionBorder" type="TextureRect" parent="."]
+[node name="SelectionBorder" type="TextureRect" parent="CardButton"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 4 )
 expand = true
 
-[connection signal="pressed" from="." to="." method="_on_Card_pressed"]
+[connection signal="pressed" from="CardButton" to="." method="_on_CardButton_pressed"]

@@ -1,4 +1,4 @@
-extends TextureButton
+extends Control
 
 class_name Card
 
@@ -11,8 +11,9 @@ export(bool) var selected = false setget set_selected
 export(bool) var highlighted = false setget set_highlighted
 
 var face = null
-onready var selectionBorder = $SelectionBorder
-onready var highlightBorder = $HighlightBorder
+onready var cardButton = $CardButton
+onready var selectionBorder = $CardButton/SelectionBorder
+onready var highlightBorder = $CardButton/HighlightBorder
 
 var game = null
 
@@ -34,14 +35,14 @@ func set_shading(value):
 
 func set_selected(show):
 	selected = show
-	if show:
+	if selected:
 		selectionBorder.show()
 	else:
 		selectionBorder.hide()
 
 func set_highlighted(show):
 	highlighted = show
-	if show:
+	if highlighted:
 		highlightBorder.show()
 	else:
 		highlightBorder.hide()
@@ -60,15 +61,17 @@ func _ready():
 #	shading = shd
 #	update_image()
 
-
-func _on_Card_pressed():
+func _on_CardButton_pressed():
 	if game != null:
 		game.select_card(self)
 
 
 func update_image():
+	cardButton = $CardButton
 	if shape != 0 and color != 0 and number != 0 and shading != 0:
 		self.face = load("res://assets/cards/"+str(shape)+"-"+str(color)+"-"+str(number)+"-"+str(shading)+".png")
 	else:
 		self.face = load("res://assets/cards/default.png")
-	set_normal_texture(self.face)
+	cardButton.set_normal_texture(self.face)
+
+

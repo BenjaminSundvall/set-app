@@ -1,15 +1,17 @@
 extends Control
 
-onready var MainMenu = preload("res://MainMenu.tscn")
-
 onready var Card = preload("res://Card.tscn")
 onready var Set = preload("res://Set.tscn")
+
 onready var cardGrid = $Table
 onready var statsLabel = $TopText/StatsLabel
 onready var timerLabel = $TopText/TimerLabel
 onready var endGameLabel = $EndGameLabel
 onready var latestSets = $LatestSets
 
+var MainMenuPath = "res://MainMenu.tscn"
+
+var savegame = null
 
 var deck = []
 var table = []
@@ -17,29 +19,51 @@ var table = []
 var selected_cards = []
 var sets_on_table = []
 var taken_sets = []
+var highlighted = false
+var highlight_count = 0
 
 var game_duration = 0
 var running = true
+
+### Settings #####################################
+export(int) var highlight_penalty = 20
+export(int) var time_limit = 0
+export(int) var set_limit = 10
+##################################################
 
 signal game_over
 
 
 func _ready():
+	savegame = SaveGame.load_savegame()
 	fill_deck()
 	refill_table()
 	game_duration = 0
+	highlight_count = 0
 
 
 func _process(delta):
 	# TODO: Do this somewhere else less often?
 	if running:
 		game_duration += delta
-		timerLabel.text = "Time: " + time_to_string(game_duration)
+		timerLabel.text = time_to_string(game_duration)
+		if time_limit > 0 and game_duration > time_limit:
+			emit_signal("game_over")
 
 
-func _input(ev):
+func _input(event):
 	if Input.is_key_pressed(KEY_ESCAPE):
 		emit_signal("game_over")
+	elif Input.is_key_pressed(KEY_R):
+		print("Clearing savefile...")
+		savegame.best_time = 0
+		savegame.write_savegame()
+		print("Savefile cleared!")
+
+
+func _notification(notification):    
+	if notification == MainLoop.NOTIFICATION_WM_GO_BACK_REQUEST: 
+		get_tree().change_scene(MainMenuPath)
 
 
 func fill_deck():
@@ -116,6 +140,10 @@ func take_set(set):
 	for card in selected_cards:
 		cardGrid.remove_child(card)		# Remove the taken cards from scene
 		table.erase(card)
+	
+	if set_limit > 0 and taken_sets.size() == set_limit:
+		emit_signal("game_over")
+		refill_table()	# TODO: Change?
 
 
 func select_card(card):
@@ -162,12 +190,19 @@ func is_set(potential_set):
 
 
 func clear_highlights():
+	highlighted = false
 	for card in table:
 		card.set_highlighted(false)
 
 
 func highlight_next():
+	if not highlighted:
+		highlight_count += 1
+		game_duration += highlight_penalty
+	
 	clear_highlights()
+	highlighted = true
+
 	sets_on_table.push_back(sets_on_table.pop_front())
 	for card in sets_on_table.front():
 		card.set_highlighted(true)
@@ -185,10 +220,11 @@ func add_set_to_recent(set):
 		return
 	
 	var taken_set = Set.instance()
-	taken_set.make_set([selected_cards[0].get_feature_list(), \
-											 selected_cards[1].get_feature_list(), \
-											 selected_cards[2].get_feature_list()], \
-											game_duration)
+	taken_set.make_set([selected_cards[0].get_feature_list(),
+						selected_cards[1].get_feature_list(),
+						selected_cards[2].get_feature_list()],
+					   game_duration,
+					   highlighted)
 	
 	taken_sets.append(taken_set)	# Used for statistics
 	
@@ -208,46 +244,20 @@ func _on_RestartButton_pressed():
 
 func _on_NormalGame_game_over():
 	running = false
-	var savegame = SaveGame.load_savegame()
+	
 	if savegame == null:
 		savegame = SaveGame.new()
 
-	if game_duration < savegame.best_time:
+	if savegame.best_time == 0 or game_duration < savegame.best_time:
 		endGameLabel.text = "Time: " + time_to_string(game_duration) + \
 							"\nNew best time!" + \
-							"\n\nScore: " + str(taken_sets.size())
+							"\n\nScore: " + str(taken_sets.size()) + \
+							"\nHighlighted sets: " + str(highlight_count)
 		savegame.best_time = game_duration
 		savegame.write_savegame()
 	else:
 		endGameLabel.text = "Time: " + time_to_string(game_duration) + \
 							"\nPrevious best: " + time_to_string(savegame.best_time) + \
-							"\n\nScore: " + str(taken_sets.size())
+							"\n\nScore: " + str(taken_sets.size()) + \
+							"\nHighlighted sets: " + str(highlight_count)
 	endGameLabel.show()
-
-
-###################################################################
-
-#var savegame = File.new() #file
-#var savegame = "user://savegame.tres" #place of the file
-#var save_data = {"highscore": 0} #variable to store data
-#
-#func create_save():
-#   savegame.open(save_path, File.WRITE)
-#   savegame.store_var(save_data)
-#   savegame.close()
-#
-##func _ready():
-##  if not savegame.file_exists(save_path):
-##    create_save()
-#
-#func save(high_score):    
-#   save_data["highscore"] = high_score #data to save
-#   savegame.open(save_path, File.WRITE) #open file to write
-#   savegame.store_var(save_data) #store the data
-#   savegame.close() # close the file
-#
-#func read_savegame():
-#   savegame.open(save_path, File.READ) #open the file
-#   save_data = savegame.get_var() #get the value
-#   savegame.close() #close the file
-#   return save_data["highscore"] #return the value

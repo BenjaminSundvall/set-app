@@ -35,4 +35,4 @@ columns = 2
 
 [node name="GameModeButton" parent="GridContainer" instance=ExtResource( 3 )]
 text = "NORMAL "
-gameModeName = "NormalGame"
+gameModeName = "Game"

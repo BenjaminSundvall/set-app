@@ -9,10 +9,11 @@ export(int) var set_shapes = -1
 export(int) var set_colors = -1
 export(int) var set_numbers = -1
 export(int) var set_shadings = -1
+export(bool) var set_highlighted = false
 
 var cards_in_set = []
 
-func make_set(cards, timestamp):
+func make_set(cards, timestamp, highlighted):
 	if cards.size() != 3:
 		print("Invalid number of cards!")
 		return
@@ -78,6 +79,11 @@ func make_set(cards, timestamp):
 	var minutes = int(timestamp / 60)
 	var seconds = int(timestamp) % 60
 	timestamp_button.text = "%d:%02d" % [minutes, seconds]
+	
+	var highlightBorder = $VBoxContainer/TimestampButton/HighlightBorder
+	set_highlighted = highlighted
+	if set_highlighted:
+		highlightBorder.show()
 
 
 func _ready():
