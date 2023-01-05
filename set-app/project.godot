@@ -18,10 +18,22 @@ _global_script_classes=[ {
 "class": "SaveGame",
 "language": "GDScript",
 "path": "res://SaveGame.gd"
+}, {
+"base": "Resource",
+"class": "SmartCard",
+"language": "GDScript",
+"path": "res://SmartCard.gd"
+}, {
+"base": "Resource",
+"class": "SmartSet",
+"language": "GDScript",
+"path": "res://SmartSet.gd"
 } ]
 _global_script_class_icons={
 "Card": "",
-"SaveGame": ""
+"SaveGame": "",
+"SmartCard": "",
+"SmartSet": ""
 }
 
 [application]

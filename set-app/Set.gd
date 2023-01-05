@@ -1,9 +1,9 @@
 extends Control
 
-const shapeMap  = {-1 : "N/A", 0 : "Different", 1 : "Squiggle", 2 : "Diamond", 3 : "Oval"}
-const colorMap  = {-1 : "N/A", 0 : "Different", 1 : "Red",      2 : "Purple",  3 : "Green"}
-const numberMap = {-1 : "N/A", 0 : "Different", 1 : "Ones",     2 : "Twos",    3 : "Threes"}
-const shadigMap = {-1 : "N/A", 0 : "Different", 1 : "Solid",    2 : "Striped", 3 : "Outlined"}
+const shapeMap   = {-1 : "N/A", 0 : "Different", 1 : "Squiggle", 2 : "Diamond", 3 : "Oval"}
+const colorMap   = {-1 : "N/A", 0 : "Different", 1 : "Red",      2 : "Purple",  3 : "Green"}
+const numberMap  = {-1 : "N/A", 0 : "Different", 1 : "Ones",     2 : "Twos",    3 : "Threes"}
+const shadingMap = {-1 : "N/A", 0 : "Different", 1 : "Solid",    2 : "Striped", 3 : "Outlined"}
 
 export(int) var set_shapes = -1
 export(int) var set_colors = -1
