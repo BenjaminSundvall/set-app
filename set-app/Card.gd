@@ -62,6 +62,11 @@ func _ready():
 #	update_image()
 
 func _on_CardButton_pressed():
+#	if game != null:
+#		game.select_card(self)
+	pass
+
+func _on_CardButton_button_down() -> void:
 	if game != null:
 		game.select_card(self)
 
@@ -73,5 +78,7 @@ func update_image():
 	else:
 		self.face = load("res://assets/cards/default.png")
 	cardButton.set_normal_texture(self.face)
+
+
 
 

@@ -33,4 +33,5 @@ anchor_bottom = 1.0
 texture = ExtResource( 4 )
 expand = true
 
+[connection signal="button_down" from="CardButton" to="." method="_on_CardButton_button_down"]
 [connection signal="pressed" from="CardButton" to="." method="_on_CardButton_pressed"]
