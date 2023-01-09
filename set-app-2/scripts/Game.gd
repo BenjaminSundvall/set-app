@@ -2,6 +2,7 @@ extends Control
 
 
 onready var CardNode = preload("res://scenes/CardNode.tscn")
+var MainMenuPath = "res://scenes/MainMenu.tscn"
 
 onready var table = $TableNode
 onready var game_mode_label = $SideBar/GameModeLabel
@@ -39,8 +40,12 @@ func _process(delta: float) -> void:
 		game_stats.duration += delta	# Increment game duration
 		if game_rules.time_limit > 0 and game_stats.duration > game_rules.time_limit:
 			emit_signal("game_over", "Time limit reached")
-		var minutes = int(game_stats.duration / 60)
-		var seconds = int(game_stats.duration) % 60
+			
+		var time = game_stats.duration
+		if game_rules.time_limit > 0:
+			time = game_rules.time_limit - game_stats.duration
+		var minutes = int(time / 60)
+		var seconds = int(time) % 60
 		timer_label.text = "Time: %d:%02d" % [minutes, seconds]
 
 
@@ -151,6 +156,14 @@ func _on_card_pressed(card_node: Node):
 			try_take_selected()
 
 
+func _on_MenuButton_pressed() -> void:
+	get_tree().change_scene(MainMenuPath)
+
+
+func _on_RestartButton_pressed() -> void:
+	get_tree().reload_current_scene()
+
+
 func _on_HighlightButton_pressed() -> void:
 	highlight_next_set()
 
@@ -166,6 +179,4 @@ func _on_Game_game_over(cause) -> void:
 									   "\nScore: %d" % [game_stats.get_set_count()] + \
 									   "\nHighlights: %d" % [game_stats.get_highlight_count()]
 	game_over_window.show()
-
-
 

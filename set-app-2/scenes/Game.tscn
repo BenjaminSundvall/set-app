@@ -36,7 +36,7 @@ margin_bottom = 100.0
 rect_min_size = Vector2( 0, 100 )
 size_flags_horizontal = 3
 custom_fonts/normal_font = ExtResource( 3 )
-text = "N/A"
+text = "[game mode]"
 
 [node name="TimerLabel" type="RichTextLabel" parent="SideBar"]
 margin_top = 120.0
@@ -109,4 +109,6 @@ custom_fonts/normal_font = ExtResource( 3 )
 text = "empty"
 
 [connection signal="game_over" from="." to="." method="_on_Game_game_over"]
+[connection signal="pressed" from="SideBar/MenuButton" to="." method="_on_MenuButton_pressed"]
+[connection signal="pressed" from="SideBar/RestartButton" to="." method="_on_RestartButton_pressed"]
 [connection signal="pressed" from="SideBar/HighlightButton" to="." method="_on_HighlightButton_pressed"]
