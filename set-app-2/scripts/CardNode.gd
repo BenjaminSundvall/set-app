@@ -17,10 +17,12 @@ func _ready() -> void:
 	pass
 
 func _process(delta: float) -> void:
-	if $CardButton.is_hovered():
-		$Hover.show()
-	else:
-		$Hover.hide()
+	# TODO: Detect swipes and multitouch
+#	if $CardButton.is_hovered():
+#		$Hover.show()
+#	else:
+#		$Hover.hide()
+	pass
 
 func set_card(new_card: Card):
 	assert(new_card is Card)
