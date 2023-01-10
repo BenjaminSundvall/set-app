@@ -50,3 +50,11 @@ func set_highlighted(val: bool):
 
 func _on_CardButton_pressed() -> void:
 	emit_signal("card_pressed", self)
+
+
+func _on_CardButton_mouse_entered() -> void:
+	$Hover.show()
+
+
+func _on_CardButton_mouse_exited() -> void:
+	$Hover.hide()

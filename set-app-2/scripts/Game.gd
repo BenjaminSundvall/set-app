@@ -4,14 +4,18 @@ extends Control
 onready var CardNode = preload("res://scenes/CardNode.tscn")
 var MainMenuPath = "res://scenes/MainMenu.tscn"
 
-onready var table = $TableNode
-onready var game_mode_label = $SideBar/GameModeLabel
-onready var timer_label = $SideBar/TimerLabel
-onready var score_label = $SideBar/ScoreLabel
-onready var set_count_label = $SideBar/SetCountLabel
-onready var menu_button = $SideBar/MenuButton
-onready var restart_button = $SideBar/RestartButton
-onready var highlight_button = $SideBar/HighlightButton
+onready var menu_button = $UIElements/TopRow/MenuButton
+onready var timer_label = $UIElements/TopRow/TimerLabel
+onready var score_label = $UIElements/TopRow/ScoreCenter/ScoreLabel
+
+onready var game_mode_label = $UIElements/TopLabels/GameModeLabel
+onready var set_count_label = $UIElements/TopLabels/SetCountLabel
+
+onready var table = $UIElements/TableNode
+
+onready var restart_button = $UIElements/BottomRow/RestartButton
+onready var highlight_button = $UIElements/BottomRow/HighlightButton
+
 onready var game_over_window = $GameOverWindow
 
 var deck: Array = []
@@ -46,7 +50,7 @@ func _process(delta: float) -> void:
 			time = game_rules.time_limit - game_stats.duration
 		var minutes = int(time / 60)
 		var seconds = int(time) % 60
-		timer_label.text = "Time: %d:%02d" % [minutes, seconds]
+		timer_label.text = "%d:%02d" % [minutes, seconds]
 
 
 func _input(event):
