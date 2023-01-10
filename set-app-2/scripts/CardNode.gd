@@ -16,6 +16,12 @@ func _ready() -> void:
 #	set_card(new_card)
 	pass
 
+func _process(delta: float) -> void:
+	if $CardButton.is_hovered():
+		$Hover.show()
+	else:
+		$Hover.hide()
+
 func set_card(new_card: Card):
 	assert(new_card is Card)
 	card = new_card
@@ -52,9 +58,3 @@ func _on_CardButton_pressed() -> void:
 	emit_signal("card_pressed", self)
 
 
-func _on_CardButton_mouse_entered() -> void:
-	$Hover.show()
-
-
-func _on_CardButton_mouse_exited() -> void:
-	$Hover.hide()
