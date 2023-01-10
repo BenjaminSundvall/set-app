@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/TableNode.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/Game.gd" type="Script" id=2]
 [ext_resource path="res://DefaultFont.tres" type="DynamicFont" id=3]
 [ext_resource path="res://assets/cards/default.png" type="Texture" id=4]
 [ext_resource path="res://LargeFont.tres" type="DynamicFont" id=5]
+[ext_resource path="res://ButtonRedStylebox.tres" type="StyleBox" id=6]
 
 [node name="Game" type="Control"]
 anchor_right = 1.0
@@ -20,80 +21,133 @@ color = Color( 0.156863, 0.156863, 0.156863, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 20.0
-margin_top = 20.0
+margin_top = 40.0
 margin_right = -20.0
 margin_bottom = -20.0
 custom_constants/separation = 20
 
-[node name="TopRow" type="HBoxContainer" parent="UIElements"]
+[node name="TopRow" type="GridContainer" parent="UIElements"]
 margin_right = 1040.0
-margin_bottom = 100.0
+margin_bottom = 80.0
+columns = 3
 
-[node name="MenuButton" type="Button" parent="UIElements/TopRow"]
+[node name="MenuButtonContainer" type="Control" parent="UIElements/TopRow"]
+margin_right = 345.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+
+[node name="MenuButton" type="Button" parent="UIElements/TopRow/MenuButtonContainer"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_top = -50.0
 margin_right = 100.0
-margin_bottom = 100.0
+margin_bottom = 50.0
 rect_min_size = Vector2( 100, 100 )
 size_flags_horizontal = 0
 custom_fonts/font = ExtResource( 5 )
 text = "<-"
 
-[node name="ScoreCenter" type="CenterContainer" parent="UIElements/TopRow"]
-margin_left = 103.0
-margin_right = 750.0
-margin_bottom = 100.0
+[node name="TimeContainer" type="CenterContainer" parent="UIElements/TopRow"]
+margin_left = 348.0
+margin_right = 693.0
+margin_bottom = 80.0
 size_flags_horizontal = 3
 
-[node name="ScoreLabel" type="Label" parent="UIElements/TopRow/ScoreCenter"]
-margin_left = 77.0
-margin_top = 7.0
-margin_right = 569.0
-margin_bottom = 93.0
+[node name="TimerLabel" type="Label" parent="UIElements/TopRow/TimeContainer"]
+margin_left = 28.0
+margin_right = 317.0
+margin_bottom = 80.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_fonts/font = ExtResource( 5 )
-text = "Score: [x]"
+custom_styles/normal = ExtResource( 6 )
+text = "12:34"
 
-[node name="TimerLabel" type="Label" parent="UIElements/TopRow"]
-margin_left = 753.0
+[node name="ScoreContainer" type="Control" parent="UIElements/TopRow"]
+margin_left = 696.0
 margin_right = 1040.0
-margin_bottom = 86.0
+margin_bottom = 80.0
+size_flags_horizontal = 3
+
+[node name="ScoreLabel" type="Label" parent="UIElements/TopRow/ScoreContainer"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -179.0
+margin_top = -43.0
+margin_bottom = 43.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-custom_fonts/font = ExtResource( 5 )
-text = "[time]"
+text = "0 Sets"
 
-[node name="TopLabels" type="GridContainer" parent="UIElements"]
-visible = false
-margin_top = 120.0
+[node name="Filler2" type="Control" parent="UIElements"]
+margin_top = 100.0
 margin_right = 1040.0
-margin_bottom = 120.0
-columns = 3
+margin_bottom = 217.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="GameModeLabel" type="Label" parent="UIElements/TopLabels"]
-visible = false
-margin_top = 79.0
-margin_right = 356.0
-margin_bottom = 155.0
-text = "[gamemode]"
+[node name="GameInfoLabels" type="HBoxContainer" parent="UIElements"]
+margin_top = 237.0
+margin_right = 1040.0
+margin_bottom = 313.0
 
-[node name="SetCountLabel" type="Label" parent="UIElements/TopLabels"]
-visible = false
-margin_top = 79.0
+[node name="GameModeLabel" type="Label" parent="UIElements/GameInfoLabels"]
 margin_right = 336.0
-margin_bottom = 155.0
-text = "Sets: [sets]"
+margin_bottom = 76.0
+text = "   Mode: ???"
+
+[node name="Filler" type="Control" parent="UIElements/GameInfoLabels"]
+margin_left = 339.0
+margin_right = 667.0
+margin_bottom = 76.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SetCountLabel" type="Label" parent="UIElements/GameInfoLabels"]
+margin_left = 670.0
+margin_right = 1040.0
+margin_bottom = 76.0
+text = "On Table: 9    "
 
 [node name="TableNode" parent="UIElements" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 120.0
+margin_top = 333.0
 margin_right = 1040.0
-margin_bottom = 1760.0
+margin_bottom = 1603.0
+
+[node name="GameOverWindow" type="ColorRect" parent="UIElements/TableNode"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -470.0
+margin_top = -635.0
+margin_right = 470.0
+margin_bottom = 635.0
+rect_min_size = Vector2( 940, 1270 )
+color = Color( 0.235294, 0.219608, 0.211765, 1 )
+
+[node name="GameOverLabel" type="RichTextLabel" parent="UIElements/TableNode/GameOverWindow"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/normal_font = ExtResource( 3 )
+text = "[end game stats]"
+
+[node name="Filler3" type="Control" parent="UIElements"]
+margin_top = 1623.0
+margin_right = 1040.0
+margin_bottom = 1740.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="BottomRow" type="HBoxContainer" parent="UIElements"]
-margin_top = 1780.0
+margin_top = 1760.0
 margin_right = 1040.0
-margin_bottom = 1880.0
+margin_bottom = 1860.0
 custom_constants/separation = 20
 
 [node name="HighlightButton" type="Button" parent="UIElements/BottomRow"]
@@ -120,26 +174,7 @@ rect_min_size = Vector2( 0, 200 )
 texture = ExtResource( 4 )
 expand = true
 
-[node name="GameOverWindow" type="ColorRect" parent="."]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -500.0
-margin_top = -300.0
-margin_right = 500.0
-margin_bottom = 300.0
-rect_min_size = Vector2( 1000, 600 )
-color = Color( 0.266667, 0.266667, 0.266667, 1 )
-
-[node name="GameOverLabel" type="RichTextLabel" parent="GameOverWindow"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_fonts/normal_font = ExtResource( 3 )
-text = "empty"
-
 [connection signal="game_over" from="." to="." method="_on_Game_game_over"]
-[connection signal="pressed" from="UIElements/TopRow/MenuButton" to="." method="_on_MenuButton_pressed"]
+[connection signal="pressed" from="UIElements/TopRow/MenuButtonContainer/MenuButton" to="." method="_on_MenuButton_pressed"]
 [connection signal="pressed" from="UIElements/BottomRow/HighlightButton" to="." method="_on_HighlightButton_pressed"]
 [connection signal="pressed" from="UIElements/BottomRow/RestartButton" to="." method="_on_RestartButton_pressed"]

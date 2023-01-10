@@ -4,19 +4,20 @@ extends Control
 onready var CardNode = preload("res://scenes/CardNode.tscn")
 var MainMenuPath = "res://scenes/MainMenu.tscn"
 
-onready var menu_button = $UIElements/TopRow/MenuButton
-onready var timer_label = $UIElements/TopRow/TimerLabel
-onready var score_label = $UIElements/TopRow/ScoreCenter/ScoreLabel
+onready var menu_button = $UIElements/TopRow/MenuButtonContainer/MenuButton
+onready var timer_label = $UIElements/TopRow/TimeContainer/TimerLabel
+onready var score_label = $UIElements/TopRow/ScoreContainer/ScoreLabel
 
-onready var game_mode_label = $UIElements/TopLabels/GameModeLabel
-onready var set_count_label = $UIElements/TopLabels/SetCountLabel
+onready var game_mode_label = $UIElements/GameInfoLabels/GameModeLabel
+onready var set_count_label = $UIElements/GameInfoLabels/SetCountLabel
 
 onready var table = $UIElements/TableNode
 
 onready var restart_button = $UIElements/BottomRow/RestartButton
 onready var highlight_button = $UIElements/BottomRow/HighlightButton
 
-onready var game_over_window = $GameOverWindow
+onready var game_over_window = $UIElements/TableNode/GameOverWindow
+onready var game_over_label = $UIElements/TableNode/GameOverWindow/GameOverLabel
 
 var deck: Array = []
 var selected_card_nodes: Array = []
@@ -34,7 +35,7 @@ func _ready() -> void:
 	var game_mode = GameRules.GameMode.SPRINT
 	game_stats = GameStats.new(game_mode)
 	game_rules = GameRules.new(game_mode)
-	game_mode_label.text = game_rules.mode_name
+	game_mode_label.text = "   Mode: " + game_rules.mode_name
 	fill_deck()
 	refill_table()
 
@@ -95,7 +96,7 @@ func update_sets_on_table() -> void:
 				var potential_set = Set.new(table.get_node_at(i).card, table.get_node_at(j).card, table.get_node_at(k).card)
 				if potential_set.is_set():
 					sets_on_table.append([table.get_node_at(i), table.get_node_at(j), table.get_node_at(k)])
-	set_count_label.text = "Sets: %d" % [sets_on_table.size()]
+	set_count_label.text = "On Table: %d   " % [sets_on_table.size()]
 
 
 func deal_card() -> void:
@@ -121,7 +122,7 @@ func try_take_selected() -> void:
 				new_card_node.connect("card_pressed", self, "_on_card_pressed")
 		refill_table()
 		game_stats.sets.append(potential_set)
-		score_label.text = "Score: %d" % [game_stats.get_set_count()]
+		score_label.text = "%d Sets" % [game_stats.get_set_count()]
 		if game_rules.set_limit > 0 and game_stats.get_set_count() >= game_rules.set_limit:
 			emit_signal("game_over", "Set limit reached")
 	clear_selection()
@@ -178,9 +179,10 @@ func _on_Game_game_over(cause) -> void:
 	print("Cause: ", cause)
 	var minutes = int(game_stats.duration / 60)
 	var seconds = int(game_stats.duration) % 60
-	$GameOverWindow/GameOverLabel.text = "Mode: " + game_rules.mode_name + \
-									   "\nTime: %d:%02d" % [minutes, seconds] + \
-									   "\nScore: %d" % [game_stats.get_set_count()] + \
-									   "\nHighlights: %d" % [game_stats.get_highlight_count()]
+	game_over_label.text = "Game Over!\n" + \
+						 "\nMode: " + game_rules.mode_name + \
+						 "\nTime: %d:%02d" % [minutes, seconds] + \
+						 "\nScore: %d" % [game_stats.get_set_count()] + \
+						 "\nHighlights: %d" % [game_stats.get_highlight_count()]
 	game_over_window.show()
 
