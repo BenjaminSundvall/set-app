@@ -59,6 +59,11 @@ func _input(event):
 		emit_signal("game_over", "Escape key pressed")
 
 
+func _notification(notification):    
+	if notification == MainLoop.NOTIFICATION_WM_GO_BACK_REQUEST: 
+		get_tree().change_scene(MainMenuPath)
+
+
 func fill_deck() -> void:
 	print("Filling deck...")
 	for shp in range(1,4):
