@@ -67,19 +67,9 @@ func _notification(notification):
 		get_tree().change_scene(MainMenuPath)
 	elif notification == MainLoop.NOTIFICATION_WM_FOCUS_OUT:
 		tab_out_cover.show()
-		game_stats.duration += 30
 		paused = true
 	elif notification == MainLoop.NOTIFICATION_WM_FOCUS_IN:
 		tab_out_cover.hide()
-		game_stats.duration += 30
-		paused = false
-	elif notification == MainLoop.NOTIFICATION_APP_PAUSED:
-		tab_out_cover.show()
-		game_stats.duration += 30
-		paused = true
-	elif notification == MainLoop.NOTIFICATION_APP_RESUMED:
-		tab_out_cover.hide()
-		game_stats.duration += 30
 		paused = false
 
 
