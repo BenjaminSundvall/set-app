@@ -23,7 +23,8 @@ var deck: Array = []
 var selected_card_nodes: Array = []
 var sets_on_table: Array = []
 var running: bool = true
-var highlighted: bool = false
+var highlight_on: bool = false
+var hint_on: bool = false
 
 var game_stats: Resource
 var game_rules: Resource
@@ -114,7 +115,9 @@ func deal_card() -> void:
 
 func try_take_selected() -> void:
 	var potential_set = Set.new(selected_card_nodes[0].card, selected_card_nodes[1].card, selected_card_nodes[2].card)
-	potential_set.highlighted = highlighted
+	potential_set.highlighted = highlight_on
+	highlight_on = false
+	hint_on = false
 	if potential_set.is_set():
 		yield(get_tree().create_timer(0.1), "timeout")	# TODO: Remove wait?
 		clear_highlights()
@@ -143,7 +146,13 @@ func clear_selection() -> void:
 func highlight_next_set() -> void:
 	clear_highlights()
 	clear_selection()
-	highlighted = true
+	if not highlight_on:
+		game_stats.duration += game_rules.reveal_penalty
+		if hint_on:
+			game_stats.duration -= game_rules.hint_penalty
+	highlight_on = true
+	hint_on = true
+	
 	var next_set = sets_on_table.pop_front()
 	for card_node in next_set:
 		card_node.highlighted = true
@@ -153,12 +162,15 @@ func highlight_next_set() -> void:
 func show_hint() -> void:
 	clear_highlights()
 	clear_selection()
-	var card_node = sets_on_table.front().back()
+	if not (hint_on or highlight_on):
+		game_stats.duration += game_rules.hint_penalty
+	hint_on = true
+	
+	var card_node = sets_on_table.front().front()
 	card_node.highlighted = true
 
 
 func clear_highlights() -> void:
-	highlighted = false
 	for set in sets_on_table:
 		for card_node in set:
 			card_node.highlighted = false
