@@ -57,6 +57,14 @@ func set_highlighted(val: bool):
 
 
 func _on_CardButton_pressed() -> void:
+#	emit_signal("card_pressed", self)
+	pass
+
+
+func _on_SwipeHitbox_pressed() -> void:
 	emit_signal("card_pressed", self)
+	$Hover.show()
 
 
+func _on_SwipeHitbox_released() -> void:
+	$Hover.hide()
