@@ -142,11 +142,19 @@ func clear_selection() -> void:
 
 func highlight_next_set() -> void:
 	clear_highlights()
+	clear_selection()
 	highlighted = true
 	var next_set = sets_on_table.pop_front()
 	for card_node in next_set:
 		card_node.highlighted = true
 	sets_on_table.push_back(next_set)
+
+
+func show_hint() -> void:
+	clear_highlights()
+	clear_selection()
+	var card_node = sets_on_table.front().back()
+	card_node.highlighted = true
 
 
 func clear_highlights() -> void:
@@ -176,12 +184,14 @@ func _on_MenuButton_pressed() -> void:
 	get_tree().change_scene(MainMenuPath)
 
 
-func _on_RestartButton_pressed() -> void:
-	get_tree().reload_current_scene()
-
-
 func _on_HighlightButton_pressed() -> void:
 	highlight_next_set()
+	
+func _on_HintButton_pressed() -> void:
+	show_hint()
+
+func _on_RestartButton_pressed() -> void:
+	get_tree().reload_current_scene()
 
 
 func _on_Game_game_over(cause) -> void:
@@ -196,4 +206,3 @@ func _on_Game_game_over(cause) -> void:
 						 "\nScore: %d" % [game_stats.get_set_count()] + \
 						 "\nHighlights: %d" % [game_stats.get_highlight_count()]
 	game_over_window.show()
-

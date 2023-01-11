@@ -151,14 +151,22 @@ margin_bottom = 1860.0
 custom_constants/separation = 20
 
 [node name="HighlightButton" type="Button" parent="UIElements/BottomRow"]
-margin_right = 510.0
+margin_right = 333.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 0, 100 )
 size_flags_horizontal = 3
 text = "Show Set"
 
+[node name="HintButton" type="Button" parent="UIElements/BottomRow"]
+margin_left = 353.0
+margin_right = 686.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 100 )
+size_flags_horizontal = 3
+text = "Hint"
+
 [node name="RestartButton" type="Button" parent="UIElements/BottomRow"]
-margin_left = 530.0
+margin_left = 706.0
 margin_right = 1040.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 0, 100 )
@@ -177,4 +185,5 @@ expand = true
 [connection signal="game_over" from="." to="." method="_on_Game_game_over"]
 [connection signal="pressed" from="UIElements/TopRow/MenuButtonContainer/MenuButton" to="." method="_on_MenuButton_pressed"]
 [connection signal="pressed" from="UIElements/BottomRow/HighlightButton" to="." method="_on_HighlightButton_pressed"]
+[connection signal="pressed" from="UIElements/BottomRow/HintButton" to="." method="_on_HintButton_pressed"]
 [connection signal="pressed" from="UIElements/BottomRow/RestartButton" to="." method="_on_RestartButton_pressed"]
