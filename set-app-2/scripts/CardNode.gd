@@ -63,8 +63,9 @@ func _on_CardButton_pressed() -> void:
 
 func _on_SwipeHitbox_pressed() -> void:
 	emit_signal("card_pressed", self)
-	$Hover.show()
+#	$Hover.show()
 
 
 func _on_SwipeHitbox_released() -> void:
-	$Hover.hide()
+#	$Hover.hide()
+	pass

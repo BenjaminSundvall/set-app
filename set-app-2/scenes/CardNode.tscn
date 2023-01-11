@@ -20,7 +20,7 @@ texture_normal = ExtResource( 1 )
 expand = true
 
 [node name="SwipeHitbox" type="TouchScreenButton" parent="."]
-modulate = Color( 0.686275, 1, 0.588235, 1 )
+modulate = Color( 0.686275, 1, 0.588235, 0 )
 normal = ExtResource( 3 )
 passby_press = true
 
