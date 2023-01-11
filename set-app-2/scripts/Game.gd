@@ -116,6 +116,7 @@ func try_take_selected() -> void:
 	var potential_set = Set.new(selected_card_nodes[0].card, selected_card_nodes[1].card, selected_card_nodes[2].card)
 	potential_set.highlighted = highlighted
 	if potential_set.is_set():
+		yield(get_tree().create_timer(0.1), "timeout")	# TODO: Remove wait?
 		clear_highlights()
 		for old_card_node in selected_card_nodes:
 			if table.node_count > 12:
@@ -130,7 +131,7 @@ func try_take_selected() -> void:
 		score_label.text = "%d Sets" % [game_stats.get_set_count()]
 		if game_rules.set_limit > 0 and game_stats.get_set_count() >= game_rules.set_limit:
 			emit_signal("game_over", "Set limit reached")
-	clear_selection()
+		clear_selection()
 
 
 func clear_selection() -> void:
@@ -161,9 +162,14 @@ func _on_card_pressed(card_node: Node):
 		selected_card_nodes.erase(card_node)
 	else:
 		card_node.selected = true
-		selected_card_nodes.append(card_node)
+		selected_card_nodes.push_front(card_node)
+		
+		if selected_card_nodes.size() > 3:
+			selected_card_nodes.pop_back().selected = false
+		
 		if selected_card_nodes.size() == 3:
 			try_take_selected()
+		
 
 
 func _on_MenuButton_pressed() -> void:
