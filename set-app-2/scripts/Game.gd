@@ -71,6 +71,12 @@ func _notification(notification):
 	elif notification == MainLoop.NOTIFICATION_WM_FOCUS_IN:
 		tab_out_cover.hide()
 		paused = false
+	elif notification == MainLoop.NOTIFICATION_APP_PAUSED:
+		tab_out_cover.show()
+		paused = true
+	elif notification == MainLoop.NOTIFICATION_APP_RESUMED:
+		tab_out_cover.hide()
+		paused = false
 
 
 func fill_deck() -> void:
