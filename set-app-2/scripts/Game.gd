@@ -12,17 +12,19 @@ onready var game_mode_label = $UIElements/GameInfoLabels/GameModeLabel
 onready var set_count_label = $UIElements/GameInfoLabels/SetCountLabel
 
 onready var table = $UIElements/TableNode
+onready var tab_out_cover = $UIElements/TableNode/TabOutCover
+onready var game_over_window = $UIElements/TableNode/GameOverWindow
+onready var game_over_label = $UIElements/TableNode/GameOverWindow/GameOverLabel
 
 onready var restart_button = $UIElements/BottomRow/RestartButton
 onready var highlight_button = $UIElements/BottomRow/HighlightButton
 
-onready var game_over_window = $UIElements/TableNode/GameOverWindow
-onready var game_over_label = $UIElements/TableNode/GameOverWindow/GameOverLabel
 
 var deck: Array = []
 var selected_card_nodes: Array = []
 var sets_on_table: Array = []
 var running: bool = true
+var paused: bool = false
 var highlight_on: bool = false
 var hint_on: bool = false
 
@@ -42,7 +44,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if running:
+	if running and not paused:
 		game_stats.duration += delta	# Increment game duration
 		if game_rules.time_limit > 0 and game_stats.duration > game_rules.time_limit:
 			emit_signal("game_over", "Time limit reached")
@@ -63,6 +65,12 @@ func _input(event):
 func _notification(notification):    
 	if notification == MainLoop.NOTIFICATION_WM_GO_BACK_REQUEST: 
 		get_tree().change_scene(MainMenuPath)
+	elif notification == MainLoop.NOTIFICATION_WM_FOCUS_OUT:
+		tab_out_cover.show()
+		paused = true
+	elif notification == MainLoop.NOTIFICATION_WM_FOCUS_IN:
+		tab_out_cover.hide()
+		paused = false
 
 
 func fill_deck() -> void:
