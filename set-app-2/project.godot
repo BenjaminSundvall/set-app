@@ -40,7 +40,7 @@ _global_script_class_icons={
 
 config/name="set-app-2"
 run/main_scene="res://scenes/MainMenu.tscn"
-boot_splash/image="res://splash_screen.png"
+boot_splash/image="res://logo-round.png"
 boot_splash/bg_color=Color( 0.156863, 0.156863, 0.156863, 1 )
 config/icon="res://icon.png"
 config/quit_on_go_back=false
@@ -61,6 +61,10 @@ window/stretch/aspect="keep"
 
 common/drop_mouse_on_gui_input_disabled=true
 theme/custom="res://DefaultTheme.tres"
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
 
 [physics]
 
