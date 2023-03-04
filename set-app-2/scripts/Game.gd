@@ -35,7 +35,11 @@ signal game_over(cause)
 
 
 func _ready() -> void:
+	# TODO: Make this selectable
+	#var game_mode = GameRules.GameMode.CLASSIC
 	var game_mode = GameRules.GameMode.SPRINT
+	#var game_mode = GameRules.GameMode.TIMED
+	
 	game_stats = GameStats.new(game_mode)
 	game_rules = GameRules.new(game_mode)
 	game_mode_label.text = "   Mode: " + game_rules.mode_name
@@ -48,10 +52,13 @@ func _process(delta: float) -> void:
 		game_stats.duration += delta	# Increment game duration
 		if game_rules.time_limit > 0 and game_stats.duration > game_rules.time_limit:
 			emit_signal("game_over", "Time limit reached")
-			
-		var time = game_stats.duration
-		if game_rules.time_limit > 0:
+		
+		var time
+		if game_rules.time_limit > 0:	# Change to countdown timer if there is a time limit
 			time = game_rules.time_limit - game_stats.duration
+			time = max(0, time)
+		else:
+			time = game_stats.duration
 		var minutes = int(time / 60)
 		var seconds = int(time) % 60
 		timer_label.text = "%d:%02d" % [minutes, seconds]
@@ -82,6 +89,7 @@ func fill_deck() -> void:
 					var new_card = Card.new([shp, col, num, shd])
 					deck.append(new_card)
 	randomize()
+	#rand_seed(123)
 	deck.shuffle()
 
 

@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://TitleFont.tres" type="DynamicFont" id=1]
-[ext_resource path="res://DefaultFont.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/TitleFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/DefaultFont.tres" type="DynamicFont" id=2]
 [ext_resource path="res://scripts/MainMenu.gd" type="Script" id=4]
 [ext_resource path="res://assets/settings_icon.png" type="Texture" id=6]
-[ext_resource path="res://logo-round.png" type="Texture" id=7]
+[ext_resource path="res://assets/logo-round.png" type="Texture" id=7]
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -52,6 +52,7 @@ texture = ExtResource( 7 )
 expand = true
 
 [node name="SettingsButton" type="TextureButton" parent="."]
+visible = false
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -170.0
@@ -74,22 +75,24 @@ margin_bottom = 790.0
 rect_min_size = Vector2( 400, 500 )
 custom_constants/separation = 20
 
-[node name="TutorialButton" type="Button" parent="Buttons"]
+[node name="GamemodeButton" type="Button" parent="Buttons"]
 margin_right = 400.0
 margin_bottom = 110.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 2 )
-text = "Tutorial"
+disabled = true
+text = "Change mode"
 
-[node name="GamemodeButton" type="Button" parent="Buttons"]
+[node name="TutorialButton" type="Button" parent="Buttons"]
 margin_top = 130.0
 margin_right = 400.0
 margin_bottom = 240.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 2 )
-text = "Change mode"
+disabled = true
+text = "Tutorial"
 
 [node name="StatisticsButton" type="Button" parent="Buttons"]
 margin_top = 260.0
@@ -98,15 +101,17 @@ margin_bottom = 370.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 2 )
+disabled = true
 text = "Statistics"
 
-[node name="CustomizeButton" type="Button" parent="Buttons"]
+[node name="SettingsButton" type="Button" parent="Buttons"]
 margin_top = 390.0
 margin_right = 400.0
 margin_bottom = 500.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 2 )
-text = "Customize"
+disabled = true
+text = "Settings"
 
 [connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]

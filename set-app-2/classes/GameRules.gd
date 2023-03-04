@@ -10,7 +10,7 @@ export(int) var time_limit
 export(int) var set_limit
 export(int) var hint_penalty
 export(int) var reveal_penalty
-#export(bool) var audodeal_cards
+#export(bool) var audo_deal_cards
 export(bool) var enable_hints
 #export(bool) var enable_shape_feature
 #export(bool) var enable_color_feature
@@ -19,6 +19,8 @@ export(bool) var enable_hints
 
 func _init(mode: int) -> void:
 	game_mode = mode
+	
+	# Hard coded game modes
 	if game_mode == GameMode.CUSTOM:
 		mode_name = "Custom"
 		time_limit = 0
