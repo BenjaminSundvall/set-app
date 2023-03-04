@@ -38,7 +38,7 @@ margin_left = -187.5
 margin_top = -100.0
 margin_right = 187.5
 margin_bottom = -24.0
-text = "Mode: Sprint"
+text = "Mode: -"
 
 [node name="SetLogo" type="TextureRect" parent="."]
 anchor_left = 0.5
@@ -81,7 +81,6 @@ margin_bottom = 110.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 2 )
-disabled = true
 text = "Change mode"
 
 [node name="TutorialButton" type="Button" parent="Buttons"]
@@ -115,3 +114,4 @@ disabled = true
 text = "Settings"
 
 [connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="Buttons/GamemodeButton" to="." method="_on_GamemodeButton_pressed"]

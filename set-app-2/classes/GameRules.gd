@@ -1,5 +1,6 @@
-class_name GameRules
-extends Resource
+#class_name GameRules
+#extends Resource
+extends Node
 
 enum GameMode {CUSTOM=0, CLASSIC=1, SPRINT=2, TIMED=3}
 
@@ -17,7 +18,8 @@ export(bool) var enable_hints
 #export(bool) var enable_number_feature
 #export(bool) var enable_shading_feature
 
-func _init(mode: int) -> void:
+#func _init(mode: int) -> void:
+func set_mode(mode: int) -> void:
 	game_mode = mode
 	
 	# Hard coded game modes

@@ -15,11 +15,6 @@ _global_script_classes=[ {
 "path": "res://classes/Card.gd"
 }, {
 "base": "Resource",
-"class": "GameRules",
-"language": "GDScript",
-"path": "res://classes/GameRules.gd"
-}, {
-"base": "Resource",
 "class": "GameStats",
 "language": "GDScript",
 "path": "res://classes/GameStats.gd"
@@ -31,7 +26,6 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Card": "",
-"GameRules": "",
 "GameStats": "",
 "Set": ""
 }
@@ -48,6 +42,7 @@ config/quit_on_go_back=false
 [autoload]
 
 Constants="*res://classes/Constants.gd"
+GameRules="*res://classes/GameRules.gd"
 
 [display]
 
