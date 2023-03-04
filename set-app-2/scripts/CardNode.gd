@@ -13,9 +13,12 @@ var highlighted: bool = false setget set_highlighted
 
 signal card_pressed(card)
 
-const yellow = "e99910"
-const green = "1d742d"
-const red = "bd1b3b"
+#const color1 = "e99910"	# Yellow (custom)
+const color1 = "623495"	# Purple (original)
+#const color2 = "1d742d"	# Green (custom)
+const color2 = "01aa51"	# Green (original)
+#const color3 = "bd1b3b"	# Red (custom)
+const color3 = "eb1d2e"	# Red (original)
 
 func _ready() -> void:
 #	var new_card = Card.new([2, 1, 3, 2])
@@ -60,11 +63,11 @@ func set_card(new_card: Card):
 	# Set color
 	var color = "ffc0cb"
 	if card.color == 1:
-		color = yellow
+		color = color1
 	elif card.color == 2:
-		color = green
+		color = color2
 	elif card.color == 3:
-		color = red
+		color = color3
 	symbol1.modulate = Color(color)
 	symbol2.modulate = Color(color)
 	symbol3.modulate = Color(color)
