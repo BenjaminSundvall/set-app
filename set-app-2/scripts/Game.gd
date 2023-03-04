@@ -29,20 +29,13 @@ var highlight_on: bool = false
 var hint_on: bool = false
 
 var game_stats: Resource
-#var game_rules: Resource
 
 signal game_over(cause)
 
 
 func _ready() -> void:
-	# TODO: Make this selectable
-	#var game_mode = GameRules.GameMode.CLASSIC
-	#var game_mode = GameRules.GameMode.SPRINT
-	#var game_mode = GameRules.GameMode.TIMED
 	var game_mode = GameRules.game_mode
 	game_stats = GameStats.new(game_mode)
-	#game_rules = GameRules.new(game_mode)
-#	game_mode_label.text = "   Mode: " + game_rules.mode_name
 	game_mode_label.text = "   Mode: " + GameRules.mode_name
 	fill_deck()
 	refill_table()
@@ -51,14 +44,11 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if running and not paused:
 		game_stats.duration += delta	# Increment game duration
-#		if game_rules.time_limit > 0 and game_stats.duration > game_rules.time_limit:
 		if GameRules.time_limit > 0 and game_stats.duration > GameRules.time_limit:
 			emit_signal("game_over", "Time limit reached")
 		
 		var time
-#		if game_rules.time_limit > 0:	# Change to countdown timer if there is a time limit
 		if GameRules.time_limit > 0:	# Change to countdown timer if there is a time limit
-#			time = game_rules.time_limit - game_stats.duration
 			time = GameRules.time_limit - game_stats.duration
 			time = max(0, time)
 		else:
@@ -93,7 +83,7 @@ func fill_deck() -> void:
 					var new_card = Card.new([shp, col, num, shd])
 					deck.append(new_card)
 	randomize()
-	#rand_seed(123)
+	#rand_seed(123)		# Make seed settable
 	deck.shuffle()
 
 
@@ -144,7 +134,7 @@ func try_take_selected() -> void:
 		for old_card_node in selected_card_nodes:
 			if table.node_count > 12:
 				table.remove_node(old_card_node)
-			else:
+			elif deck.size() > 0:
 				var new_card_node = CardNode.instance()
 				new_card_node.set_card(deck.pop_front())
 				table.replace_node(old_card_node, new_card_node)
@@ -152,7 +142,6 @@ func try_take_selected() -> void:
 		refill_table()
 		game_stats.sets.append(potential_set)
 		score_label.text = "%d Sets" % [game_stats.get_set_count()]
-#		if game_rules.set_limit > 0 and game_stats.get_set_count() >= game_rules.set_limit:
 		if GameRules.set_limit > 0 and game_stats.get_set_count() >= GameRules.set_limit:
 			emit_signal("game_over", "Set limit reached")
 		clear_selection()
@@ -168,10 +157,8 @@ func highlight_next_set() -> void:
 	clear_highlights()
 	clear_selection()
 	if not highlight_on:
-#		game_stats.duration += game_rules.reveal_penalty
 		game_stats.duration += GameRules.reveal_penalty
 		if hint_on:
-#			game_stats.duration -= game_rules.hint_penalty
 			game_stats.duration -= GameRules.hint_penalty
 	highlight_on = true
 	hint_on = true
@@ -186,7 +173,6 @@ func show_hint() -> void:
 	clear_highlights()
 	clear_selection()
 	if not (hint_on or highlight_on):
-#		game_stats.duration += game_rules.hint_penalty
 		game_stats.duration += GameRules.hint_penalty
 	hint_on = true
 	

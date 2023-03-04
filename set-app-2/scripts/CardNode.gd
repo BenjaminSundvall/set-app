@@ -86,13 +86,14 @@ func set_card(new_card: Card):
 		symbol2.show()
 		symbol3.show()
 
+
 func set_selected(val: bool):
 	selected = val
-	selection = $Selection	
+	selection = $Selection
 	if selected:
 		selection.show()
 	else:
-		selection.hide()
+		selection.hide()	
 
 
 func set_highlighted(val: bool):
@@ -102,11 +103,6 @@ func set_highlighted(val: bool):
 		highlight.show()
 	else:
 		highlight.hide()
-
-
-func _on_CardButton_pressed() -> void:
-#	emit_signal("card_pressed", self)
-	pass
 
 
 func _on_SwipeHitbox_pressed() -> void:
