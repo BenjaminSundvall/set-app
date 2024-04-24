@@ -1,23 +1,23 @@
 extends Control
 
 
-onready var CardNode = preload("res://scenes/CardNode.tscn")
+@onready var CardNode = preload("res://scenes/CardNode.tscn")
 var MainMenuPath = "res://scenes/MainMenu.tscn"
 
-onready var menu_button = $UIElements/TopRow/MenuButtonContainer/MenuButton
-onready var timer_label = $UIElements/TopRow/TimeContainer/TimerLabel
-onready var score_label = $UIElements/TopRow/ScoreContainer/ScoreLabel
+@onready var menu_button = $UIElements/TopRow/MenuButtonContainer/MenuButton
+@onready var timer_label = $UIElements/TopRow/TimeContainer/TimerLabel
+@onready var score_label = $UIElements/TopRow/ScoreContainer/ScoreLabel
 
-onready var game_mode_label = $UIElements/GameInfoLabels/GameModeLabel
-onready var set_count_label = $UIElements/GameInfoLabels/SetCountLabel
+@onready var game_mode_label = $UIElements/GameInfoLabels/GameModeLabel
+@onready var set_count_label = $UIElements/GameInfoLabels/SetCountLabel
 
-onready var table = $UIElements/TableNode
-onready var tab_out_cover = $UIElements/TableNode/TabOutCover
-onready var game_over_window = $UIElements/TableNode/GameOverWindow
-onready var game_over_label = $UIElements/TableNode/GameOverWindow/GameOverLabel
+@onready var table = $UIElements/TableNode
+@onready var tab_out_cover = $UIElements/TableNode/TabOutCover
+@onready var game_over_window = $UIElements/TableNode/GameOverWindow
+@onready var game_over_label = $UIElements/TableNode/GameOverWindow/GameOverLabel
 
-onready var restart_button = $UIElements/BottomRow/RestartButton
-onready var highlight_button = $UIElements/BottomRow/HighlightButton
+@onready var restart_button = $UIElements/BottomRow/RestartButton
+@onready var highlight_button = $UIElements/BottomRow/HighlightButton
 
 
 var deck: Array = []
@@ -65,11 +65,11 @@ func _input(event):
 
 func _notification(notification):    
 	if notification == MainLoop.NOTIFICATION_WM_GO_BACK_REQUEST: 
-		get_tree().change_scene(MainMenuPath)
-	elif notification == MainLoop.NOTIFICATION_WM_FOCUS_OUT:
+		get_tree().change_scene_to_file(MainMenuPath)
+	elif notification == MainLoop.NOTIFICATION_APPLICATION_FOCUS_OUT:
 		tab_out_cover.show()
 		paused = true
-	elif notification == MainLoop.NOTIFICATION_WM_FOCUS_IN:
+	elif notification == MainLoop.NOTIFICATION_APPLICATION_FOCUS_IN:
 		tab_out_cover.hide()
 		paused = false
 
@@ -117,10 +117,10 @@ func update_sets_on_table() -> void:
 
 func deal_card() -> void:
 	var card = deck.pop_front()
-	var new_card_node = CardNode.instance()
+	var new_card_node = CardNode.instantiate()
 	new_card_node.set_card(card)
 	table.add_node(new_card_node)
-	new_card_node.connect("card_pressed", self, "_on_card_pressed")
+	new_card_node.connect("card_pressed", Callable(self, "_on_card_pressed"))
 
 
 func try_take_selected() -> void:
@@ -129,16 +129,16 @@ func try_take_selected() -> void:
 	highlight_on = false
 	hint_on = false
 	if potential_set.is_set():
-		yield(get_tree().create_timer(0.1), "timeout")	# TODO: Remove wait?
+		await get_tree().create_timer(0.1).timeout	# TODO: Remove wait?
 		clear_highlights()
 		for old_card_node in selected_card_nodes:
 			if table.node_count > 12:
 				table.remove_node(old_card_node)
 			elif deck.size() > 0:
-				var new_card_node = CardNode.instance()
+				var new_card_node = CardNode.instantiate()
 				new_card_node.set_card(deck.pop_front())
 				table.replace_node(old_card_node, new_card_node)
-				new_card_node.connect("card_pressed", self, "_on_card_pressed")
+				new_card_node.connect("card_pressed", Callable(self, "_on_card_pressed"))
 		refill_table()
 		game_stats.sets.append(potential_set)
 		score_label.text = "%d Sets" % [game_stats.get_set_count()]
@@ -203,7 +203,7 @@ func _on_card_pressed(card_node: Node):
 
 
 func _on_MenuButton_pressed() -> void:
-	get_tree().change_scene(MainMenuPath)
+	get_tree().change_scene_to_file(MainMenuPath)
 
 
 func _on_HighlightButton_pressed() -> void:

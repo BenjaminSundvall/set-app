@@ -2,13 +2,13 @@ class_name GameStats
 extends Resource
 
 
-export(String) var player setget set_player
-export(int) var game_mode setget set_game_mode
+@export var player: String: set = set_player
+@export var game_mode: int: set = set_game_mode
 
-export(Array) var sets setget set_sets, get_sets
-export(float) var start_time setget set_start_time
-export(float) var end_time setget set_end_time
-export(float) var duration setget set_duration
+@export var sets: Array: get = get_sets, set = set_sets
+@export var start_time: float: set = set_start_time
+@export var end_time: float: set = set_end_time
+@export var duration: float: set = set_duration
 
 
 

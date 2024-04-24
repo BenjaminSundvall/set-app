@@ -6,9 +6,9 @@
 [node name="TableNode" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = -140.0
-margin_bottom = -650.0
-rect_min_size = Vector2( 940, 1270 )
+offset_right = -140.0
+offset_bottom = -650.0
+custom_minimum_size = Vector2( 940, 1270 )
 size_flags_horizontal = 3
 script = ExtResource( 1 )
 
@@ -17,19 +17,19 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="Background" type="ColorRect" parent="CenterContainer"]
-margin_right = 940.0
-margin_bottom = 1270.0
-rect_min_size = Vector2( 940, 1270 )
+offset_right = 940.0
+offset_bottom = 1270.0
+custom_minimum_size = Vector2( 940, 1270 )
 size_flags_horizontal = 0
 size_flags_vertical = 0
 color = Color( 0.235294, 0.219608, 0.211765, 1 )
 
 [node name="MainGrid" type="GridContainer" parent="CenterContainer"]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 930.0
-margin_bottom = 1260.0
-rect_min_size = Vector2( 920, 1250 )
-custom_constants/vseparation = 10
-custom_constants/hseparation = 10
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 930.0
+offset_bottom = 1260.0
+custom_minimum_size = Vector2( 920, 1250 )
+theme_override_constants/v_separation = 10
+theme_override_constants/h_separation = 10
 columns = 3

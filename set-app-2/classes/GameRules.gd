@@ -4,15 +4,15 @@ extends Node
 
 enum GameMode {CUSTOM=0, CLASSIC=1, SPRINT=2, TIMED=3}
 
-export(int) var game_mode
+@export var game_mode: int
 
-export(String) var mode_name
-export(int) var time_limit
-export(int) var set_limit
-export(int) var hint_penalty
-export(int) var reveal_penalty
+@export var mode_name: String
+@export var time_limit: int
+@export var set_limit: int
+@export var hint_penalty: int
+@export var reveal_penalty: int
 #export(bool) var audo_deal_cards
-export(bool) var enable_hints
+@export var enable_hints: bool
 #export(bool) var enable_shape_feature
 #export(bool) var enable_color_feature
 #export(bool) var enable_number_feature

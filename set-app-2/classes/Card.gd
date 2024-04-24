@@ -7,12 +7,12 @@ const COLOR_INDEX = 1
 const NUMBER_INDEX = 2
 const SHADING_INDEX = 3
 
-export(Array) var features setget ,get_features
+@export var features: Array: get = get_features
 
-var shape setget ,get_shape
-var color setget ,get_color
-var number setget ,get_number
-var shading setget ,get_shading
+var shape : get = get_shape
+var color : get = get_color
+var number : get = get_number
+var shading : get = get_shading
 
 
 func _init(new_features: Array) -> void:

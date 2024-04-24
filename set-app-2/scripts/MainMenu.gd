@@ -12,7 +12,7 @@ func _ready() -> void:
 
 
 func _on_PlayButton_pressed() -> void:
-	get_tree().change_scene(GamePath)
+	get_tree().change_scene_to_file(GamePath)
 
 
 func _on_GamemodeButton_pressed():

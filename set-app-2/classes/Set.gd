@@ -2,9 +2,9 @@ class_name Set
 extends Resource
 
 
-export(Array) var cards setget ,get_cards
-export(float) var time
-export(bool) var highlighted = false
+@export var cards: Array: get = get_cards
+@export var time: float
+@export var highlighted: bool = false
 
 
 func _init(card_1: Resource, card_2: Resource, card_3: Resource) -> void:

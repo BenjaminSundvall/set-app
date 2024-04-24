@@ -7,9 +7,9 @@ var symbol3
 var highlight
 var selection
 
-var card setget set_card	# TODO: Change Resource to Card
-var selected: bool = false setget set_selected
-var highlighted: bool = false setget set_highlighted
+var card : set = set_card
+var selected: bool = false: set = set_selected
+var highlighted: bool = false: set = set_highlighted
 
 signal card_pressed(card)
 

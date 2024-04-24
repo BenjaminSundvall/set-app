@@ -2,9 +2,9 @@
 
 [ext_resource path="res://scenes/TableNode.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/Game.gd" type="Script" id=2]
-[ext_resource path="res://assets/DefaultFont.tres" type="DynamicFont" id=3]
-[ext_resource path="res://assets/cards/default.png" type="Texture" id=4]
-[ext_resource path="res://assets/LargeFont.tres" type="DynamicFont" id=5]
+[ext_resource path="res://assets/DefaultFont.tres" type="FontFile" id=3]
+[ext_resource path="res://assets/cards/default.png" type="Texture2D" id=4]
+[ext_resource path="res://assets/LargeFont.tres" type="FontFile" id=5]
 [ext_resource path="res://assets/styleboxes/ButtonRedStylebox.tres" type="StyleBox" id=6]
 
 [node name="Game" type="Control"]
@@ -20,53 +20,53 @@ color = Color( 0.156863, 0.156863, 0.156863, 1 )
 [node name="UIElements" type="VBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 20.0
-margin_top = 40.0
-margin_right = -20.0
-margin_bottom = -20.0
-custom_constants/separation = 20
+offset_left = 20.0
+offset_top = 40.0
+offset_right = -20.0
+offset_bottom = -20.0
+theme_override_constants/separation = 20
 
 [node name="TopRow" type="GridContainer" parent="UIElements"]
-margin_right = 1040.0
-margin_bottom = 60.0
+offset_right = 1040.0
+offset_bottom = 60.0
 columns = 3
 
 [node name="MenuButtonContainer" type="Control" parent="UIElements/TopRow"]
-margin_right = 345.0
-margin_bottom = 60.0
+offset_right = 345.0
+offset_bottom = 60.0
 size_flags_horizontal = 3
 
 [node name="MenuButton" type="Button" parent="UIElements/TopRow/MenuButtonContainer"]
 anchor_top = 0.5
 anchor_bottom = 0.5
-margin_top = -50.0
-margin_right = 100.0
-margin_bottom = 50.0
-rect_min_size = Vector2( 100, 100 )
+offset_top = -50.0
+offset_right = 100.0
+offset_bottom = 50.0
+custom_minimum_size = Vector2( 100, 100 )
 size_flags_horizontal = 0
-custom_fonts/font = ExtResource( 5 )
+theme_override_fonts/font = ExtResource( 5 )
 text = "<-"
 
 [node name="TimeContainer" type="CenterContainer" parent="UIElements/TopRow"]
-margin_left = 348.0
-margin_right = 693.0
-margin_bottom = 60.0
+offset_left = 348.0
+offset_right = 693.0
+offset_bottom = 60.0
 size_flags_horizontal = 3
 
 [node name="TimerLabel" type="Label" parent="UIElements/TopRow/TimeContainer"]
-margin_left = 57.0
-margin_right = 288.0
-margin_bottom = 60.0
+offset_left = 57.0
+offset_right = 288.0
+offset_bottom = 60.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-custom_fonts/font = ExtResource( 5 )
-custom_styles/normal = ExtResource( 6 )
+theme_override_fonts/font = ExtResource( 5 )
+theme_override_styles/normal = ExtResource( 6 )
 text = "12:34"
 
 [node name="ScoreContainer" type="Control" parent="UIElements/TopRow"]
-margin_left = 696.0
-margin_right = 1040.0
-margin_bottom = 60.0
+offset_left = 696.0
+offset_right = 1040.0
+offset_bottom = 60.0
 size_flags_horizontal = 3
 
 [node name="ScoreLabel" type="Label" parent="UIElements/TopRow/ScoreContainer"]
@@ -74,49 +74,49 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_left = -179.0
-margin_top = -43.0
-margin_bottom = 43.0
+offset_left = -179.0
+offset_top = -43.0
+offset_bottom = 43.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 text = "0 Sets"
 
 [node name="Filler1" type="Control" parent="UIElements"]
-margin_top = 80.0
-margin_right = 1040.0
-margin_bottom = 207.0
+offset_top = 80.0
+offset_right = 1040.0
+offset_bottom = 207.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="GameInfoLabels" type="HBoxContainer" parent="UIElements"]
-margin_top = 227.0
-margin_right = 1040.0
-margin_bottom = 303.0
+offset_top = 227.0
+offset_right = 1040.0
+offset_bottom = 303.0
 
 [node name="GameModeLabel" type="Label" parent="UIElements/GameInfoLabels"]
-margin_right = 336.0
-margin_bottom = 76.0
+offset_right = 336.0
+offset_bottom = 76.0
 text = "   Mode: ???"
 
 [node name="Filler" type="Control" parent="UIElements/GameInfoLabels"]
-margin_left = 339.0
-margin_right = 667.0
-margin_bottom = 76.0
+offset_left = 339.0
+offset_right = 667.0
+offset_bottom = 76.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="SetCountLabel" type="Label" parent="UIElements/GameInfoLabels"]
-margin_left = 670.0
-margin_right = 1040.0
-margin_bottom = 76.0
+offset_left = 670.0
+offset_right = 1040.0
+offset_bottom = 76.0
 text = "On Table: 9    "
 
 [node name="TableNode" parent="UIElements" instance=ExtResource( 1 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 323.0
-margin_right = 1040.0
-margin_bottom = 1593.0
+offset_top = 323.0
+offset_right = 1040.0
+offset_bottom = 1593.0
 
 [node name="TabOutCover" type="ColorRect" parent="UIElements/TableNode"]
 visible = false
@@ -124,11 +124,11 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -470.0
-margin_top = -635.0
-margin_right = 470.0
-margin_bottom = 635.0
-rect_min_size = Vector2( 940, 1270 )
+offset_left = -470.0
+offset_top = -635.0
+offset_right = 470.0
+offset_bottom = 635.0
+custom_minimum_size = Vector2( 940, 1270 )
 color = Color( 0.235294, 0.219608, 0.211765, 1 )
 
 [node name="Label" type="Label" parent="UIElements/TableNode/TabOutCover"]
@@ -136,11 +136,11 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -327.0
-margin_top = -43.0
-margin_right = 327.0
-margin_bottom = 43.0
-custom_fonts/font = ExtResource( 5 )
+offset_left = -327.0
+offset_top = -43.0
+offset_right = 327.0
+offset_bottom = 43.0
+theme_override_fonts/font = ExtResource( 5 )
 text = "Game Paused"
 
 [node name="GameOverWindow" type="ColorRect" parent="UIElements/TableNode"]
@@ -149,61 +149,61 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -470.0
-margin_top = -635.0
-margin_right = 470.0
-margin_bottom = 635.0
-rect_min_size = Vector2( 940, 1270 )
+offset_left = -470.0
+offset_top = -635.0
+offset_right = 470.0
+offset_bottom = 635.0
+custom_minimum_size = Vector2( 940, 1270 )
 color = Color( 0.235294, 0.219608, 0.211765, 1 )
 
 [node name="GameOverLabel" type="RichTextLabel" parent="UIElements/TableNode/GameOverWindow"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/normal_font = ExtResource( 3 )
+theme_override_fonts/normal_font = ExtResource( 3 )
 text = "[end game stats]"
 
 [node name="Filler2" type="Control" parent="UIElements"]
-margin_top = 1613.0
-margin_right = 1040.0
-margin_bottom = 1740.0
+offset_top = 1613.0
+offset_right = 1040.0
+offset_bottom = 1740.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="BottomRow" type="HBoxContainer" parent="UIElements"]
-margin_top = 1760.0
-margin_right = 1040.0
-margin_bottom = 1860.0
-custom_constants/separation = 20
+offset_top = 1760.0
+offset_right = 1040.0
+offset_bottom = 1860.0
+theme_override_constants/separation = 20
 
 [node name="HighlightButton" type="Button" parent="UIElements/BottomRow"]
-margin_right = 333.0
-margin_bottom = 100.0
-rect_min_size = Vector2( 0, 100 )
+offset_right = 333.0
+offset_bottom = 100.0
+custom_minimum_size = Vector2( 0, 100 )
 size_flags_horizontal = 3
 text = "Show Set"
 
 [node name="HintButton" type="Button" parent="UIElements/BottomRow"]
-margin_left = 353.0
-margin_right = 686.0
-margin_bottom = 100.0
-rect_min_size = Vector2( 0, 100 )
+offset_left = 353.0
+offset_right = 686.0
+offset_bottom = 100.0
+custom_minimum_size = Vector2( 0, 100 )
 size_flags_horizontal = 3
 text = "Hint"
 
 [node name="RestartButton" type="Button" parent="UIElements/BottomRow"]
-margin_left = 706.0
-margin_right = 1040.0
-margin_bottom = 100.0
-rect_min_size = Vector2( 0, 100 )
+offset_left = 706.0
+offset_right = 1040.0
+offset_bottom = 100.0
+custom_minimum_size = Vector2( 0, 100 )
 size_flags_horizontal = 3
 text = "Restart"
 
 [node name="BannerAd" type="TextureRect" parent="UIElements"]
 visible = false
-margin_top = 1680.0
-margin_right = 1040.0
-margin_bottom = 1880.0
-rect_min_size = Vector2( 0, 200 )
+offset_top = 1680.0
+offset_right = 1040.0
+offset_bottom = 1880.0
+custom_minimum_size = Vector2( 0, 200 )
 texture = ExtResource( 4 )
 expand = true
 

@@ -6,7 +6,7 @@ const MAX_CAPACITY = WIDTH * HEIGHT
 
 var node_count = 0
 
-onready var main_grid = $CenterContainer/MainGrid
+@onready var main_grid = $CenterContainer/MainGrid
 
 
 func _ready() -> void:
